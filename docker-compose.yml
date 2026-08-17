@@ -1,0 +1,54 @@
+version: '3.8'
+
+services:
+  # Guacamole Backend Proxy Daemon
+  guacd:
+    image: guacamole/guacd:latest
+    container_name: guacd
+    restart: always
+    networks:
+      - guacamole_net
+
+  # PostgreSQL Database for users and connections
+  guacamole-db:
+    image: postgres:15-alpine
+    container_name: guacamole-db
+    restart: always
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-guacamole_db}
+      POSTGRES_USER: ${POSTGRES_USER:-guacamole_user}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-ChangeMe123!}
+    volumes:
+      - guacamole_db_data:/var/lib/postgresql/data
+      # Mount schema script on first run if needed:
+      - ./initdb.sql:/docker-entrypoint-initdb.d/initdb.sql:ro
+    networks:
+      - guacamole_net
+
+  # Guacamole Web Application
+  guacamole:
+    image: guacamole/guacamole:latest
+    container_name: guacamole
+    restart: always
+    ports:
+      - "${GUACAMOLE_PORT:-8080}:8080"
+    environment:
+      GUACD_HOSTNAME: guacd
+      GUACD_PORT: 4822
+      POSTGRES_DATABASE: ${POSTGRES_DB:-guacamole_db}
+      POSTGRES_USER: ${POSTGRES_USER:-guacamole_user}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-ChangeMe123!}
+      POSTGRES_HOSTNAME: guacamole-db
+      POSTGRES_PORT: 5432
+    depends_on:
+      - guacd
+      - guacamole-db
+    networks:
+      - guacamole_net
+
+volumes:
+  guacamole_db_data:
+
+networks:
+  guacamole_net:
+    driver: bridge

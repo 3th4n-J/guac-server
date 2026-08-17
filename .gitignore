@@ -1,0 +1,30 @@
+# Environment & Secret files
+.env
+*.env
+*.env.*
+
+# Generated Database Scripts & Dumps
+initdb.sql
+*.sql
+*.sqlite
+*.db
+
+# Persistent Data Directories (if host-mounted volumes are added later)
+/data/
+/postgres_data/
+/guac_data/
+
+# OS-generated files
+Thumbs.db
+Desktop.ini
+.DS_Store
+
+# IDE / Editor configuration
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Log files
+*.log
+logs/
