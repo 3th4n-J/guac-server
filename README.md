@@ -40,6 +40,6 @@ docker compose up -d
 ```
 ### 4. Access Guacamole
 Navigate to the web application in your browser:
-URL: `http://localhost:8080/guacamole/`
-Default Username: `guacadmin`
-Default Password: `guacadmin`
+- URL: `http://localhost:8080/guacamole/`
+- Default Username: `guacadmin`
+- Default Password: `guacadmin`
