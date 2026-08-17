@@ -1,1 +1,1 @@
-#Initial Commit# guac-server
+# guac-server
