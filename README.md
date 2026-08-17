@@ -30,7 +30,7 @@ chmod +x init-db.sh
 or if you're on Windows:
 
 ```PowerShell
-docker run --rm guacamole/guacamole /opt/guacamole/bin/initdb.sh --postgres > initdb.sql
+docker run --rm guacamole/guacamole /opt/guacamole/bin/initdb.sh --postgresql > initdb.sql
 ```
 ### 3. Start the Stack
 Launch all services in detached mode:
